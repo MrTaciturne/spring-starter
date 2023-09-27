@@ -1,10 +1,13 @@
 package com.example.springstarter.controller;
 
 import com.example.springstarter.dto.UserReadDto;
-import com.example.springstarter.dto.UserWriteDto;
+import com.example.springstarter.dto.UserWriteUpdateDto;
 import com.example.springstarter.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,17 +22,34 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserReadDto findById(@PathVariable Long id) {
-        return userService.getById(id).orElseThrow(RuntimeException::new);
+        return userService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/All")
+    @GetMapping()
     public List<UserReadDto> findAll() {
         return userService.findAll();
     }
 
     @PostMapping(value = "/", consumes = APPLICATION_JSON_VALUE)
-    public UserReadDto create(@RequestBody UserWriteDto userWriteDto){
-        return userService.create(userWriteDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserReadDto create(@RequestBody @Validated UserWriteUpdateDto userWriteUpdateDto){
+        return userService.create(userWriteUpdateDto);
     }
+
+    @PutMapping("/{id}")
+    public UserReadDto update(@PathVariable Long id,
+                              @RequestBody @Validated UserWriteUpdateDto userDto){
+        return userService.update(id, userDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id){
+        if (!userService.delete(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
 

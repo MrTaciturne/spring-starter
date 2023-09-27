@@ -1,9 +1,10 @@
 package com.example.springstarter.service;
 
 import com.example.springstarter.dto.UserReadDto;
-import com.example.springstarter.dto.UserWriteDto;
+import com.example.springstarter.dto.UserWriteUpdateDto;
+import com.example.springstarter.entity.User;
 import com.example.springstarter.mappers.UserReadMapper;
-import com.example.springstarter.mappers.UserWriteMapper;
+import com.example.springstarter.mappers.UserWriteUpdateMapper;
 import com.example.springstarter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
-    private final UserWriteMapper userWriteMapper;
+    private final UserWriteUpdateMapper userWriteUpdateMapper;
 
     public Optional<UserReadDto> getById(Long id) {
         return userRepository.findById(id)
@@ -32,11 +33,28 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserReadDto create(UserWriteDto userWriteDto) {
-        return Optional.of(userWriteDto)
-                .map(userWriteMapper::map)
+    public UserReadDto create(UserWriteUpdateDto userWriteUpdateDto) {
+        return Optional.of(userWriteUpdateDto)
+                .map(userWriteUpdateMapper::map)
                 .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow(RuntimeException::new);
+    }
+
+    public Optional<UserReadDto> update(Long id, UserWriteUpdateDto userDto) {
+        return userRepository
+                .findById(id)
+                .map(entity -> userWriteUpdateMapper.map(userDto, entity))
+                .map(userRepository::saveAndFlush)
+                .map(userReadMapper::map);
+    }
+
+
+    public boolean delete(Long id) {
+        return userRepository.findById(id)
+                .map(entity -> {
+                    userRepository.delete(entity);
+                    return true;
+                }).orElse(false);
     }
 }
