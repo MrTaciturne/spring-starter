@@ -1,7 +1,8 @@
-package com.example.springstarter.mappers;
+package com.example.springstarter.mappers.user;
 
-import com.example.springstarter.dto.UserWriteUpdateDto;
+import com.example.springstarter.dto.user.UserWriteUpdateDto;
 import com.example.springstarter.entity.User;
+import com.example.springstarter.mappers.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.example.springstarter.dto;
+package com.example.springstarter.dto.user;
 
 import jakarta.validation.constraints.*;
 import lombok.Value;

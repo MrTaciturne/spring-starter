@@ -1,7 +1,7 @@
 package com.example.springstarter.controller;
 
-import com.example.springstarter.dto.UserReadDto;
-import com.example.springstarter.dto.UserWriteUpdateDto;
+import com.example.springstarter.dto.user.UserReadDto;
+import com.example.springstarter.dto.user.UserWriteUpdateDto;
 import com.example.springstarter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

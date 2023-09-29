@@ -1,5 +1,6 @@
-package com.example.springstarter.dto;
+package com.example.springstarter.dto.user;
 
+import com.example.springstarter.dto.company.CompanyReadDto;
 import lombok.Value;
 
 import java.time.LocalDate;
@@ -11,4 +12,5 @@ public class UserReadDto {
     String firstname;
     String lastname;
     LocalDate birthDate;
+    CompanyReadDto companyReadDto;
 }

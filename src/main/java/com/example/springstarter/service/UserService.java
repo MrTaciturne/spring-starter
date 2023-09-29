@@ -1,10 +1,9 @@
 package com.example.springstarter.service;
 
-import com.example.springstarter.dto.UserReadDto;
-import com.example.springstarter.dto.UserWriteUpdateDto;
-import com.example.springstarter.entity.User;
-import com.example.springstarter.mappers.UserReadMapper;
-import com.example.springstarter.mappers.UserWriteUpdateMapper;
+import com.example.springstarter.dto.user.UserReadDto;
+import com.example.springstarter.dto.user.UserWriteUpdateDto;
+import com.example.springstarter.mappers.user.UserReadMapper;
+import com.example.springstarter.mappers.user.UserWriteUpdateMapper;
 import com.example.springstarter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
